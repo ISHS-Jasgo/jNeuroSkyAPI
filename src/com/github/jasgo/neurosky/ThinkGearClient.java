@@ -1,13 +1,13 @@
 package com.github.jasgo.neurosky;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class ThinkGearClient {
+    
     private final String name;
     private final String key;
     private final String host;
@@ -16,7 +16,7 @@ public class ThinkGearClient {
     public ThinkGearClient(String name, String key) {
         this.name = name;
         this.key = key;
-        this.host = "localhost";
+        this.host = "210.114.22.146";
         this.port = 13854;
     }
 
@@ -43,14 +43,14 @@ public class ThinkGearClient {
     }
     public JSONObject getConfig() {
         JSONObject result = new JSONObject();
-        result.put("enableRawOutput", false);
+        result.put("enableRawOutput", true);
         result.put("format", "Json");
         return result;
     }
     public void connect() throws IOException {
         System.out.println(getAuth().toJSONString());
         System.out.println(getConfig().toJSONString());
-        Socket socket = new Socket(host, port);
+        Socket socket = new Socket("localhost", port);
         Socket server = new Socket(host, 3000);
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
         PrintWriter writer = new PrintWriter(socket.getOutputStream(), true, StandardCharsets.UTF_8);
